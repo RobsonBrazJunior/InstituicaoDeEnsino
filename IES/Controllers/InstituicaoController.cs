@@ -48,7 +48,7 @@ namespace IES.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(instituicoes);
+            return View(instituicoes.OrderBy(i => i.Nome));
         }
 
         // GET: Create
