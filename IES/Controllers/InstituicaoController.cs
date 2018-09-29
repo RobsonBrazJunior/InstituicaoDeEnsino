@@ -65,5 +65,10 @@ namespace IES.Controllers
             instituicao.InstituicaoID = instituicoes.Select(i => i.InstituicaoID).Max() + 1;
             return RedirectToAction("Index");
         }
+
+        public ActionResult Edit(long id)
+        {
+            return View(instituicoes.Where(i => i.InstituicaoID == id).First());
+        }
     }
 }
