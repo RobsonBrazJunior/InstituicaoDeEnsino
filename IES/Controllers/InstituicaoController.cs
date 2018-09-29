@@ -56,5 +56,14 @@ namespace IES.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Instituicao instituicao)
+        {
+            instituicoes.Add(instituicao);
+            instituicao.InstituicaoID = instituicoes.Select(i => i.InstituicaoID).Max() + 1;
+            return RedirectToAction("Index");
+        }
     }
 }
