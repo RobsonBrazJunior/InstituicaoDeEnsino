@@ -70,5 +70,14 @@ namespace IES.Controllers
         {
             return View(instituicoes.Where(i => i.InstituicaoID == id).First());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Instituicao instituicao)
+        {
+            instituicoes.Remove(instituicoes.Where(i => i.InstituicaoID == instituicao.InstituicaoID).First());
+            instituicoes.Add(instituicao);
+            return RedirectToAction("Index");
+        }
     }
 }
