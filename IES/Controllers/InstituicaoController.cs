@@ -45,5 +45,7 @@ namespace IES.Controllers
         };
 
         public IActionResult Index() => View(instituicoes);
+
+        public ActionResult Create() => View();
     }
 }
