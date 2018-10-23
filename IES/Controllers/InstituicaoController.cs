@@ -68,5 +68,7 @@ namespace IES.Controllers
             instituicoes.Add(instituicao);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Details(long id) => View(instituicoes.Where(i => i.InstituicaoID == id).First());
     }
 }
