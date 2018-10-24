@@ -70,5 +70,7 @@ namespace IES.Controllers
         }
 
         public ActionResult Details(long id) => View(instituicoes.Where(i => i.InstituicaoID == id).First());
+
+        public ActionResult Delete(long id) => View(instituicoes.Where(i => i.InstituicaoID == id).First());
     }
 }
