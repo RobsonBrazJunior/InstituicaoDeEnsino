@@ -72,5 +72,13 @@ namespace IES.Controllers
         public ActionResult Details(long id) => View(instituicoes.Where(i => i.InstituicaoID == id).First());
 
         public ActionResult Delete(long id) => View(instituicoes.Where(i => i.InstituicaoID == id).First());
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Instituicao instituicao)
+        {
+            instituicoes.Remove(instituicoes.Where(i => i.InstituicaoID == instituicao.InstituicaoID).First());
+            return RedirectToAction("Index");
+        }
     }
 }
