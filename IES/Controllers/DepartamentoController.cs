@@ -43,5 +43,18 @@ namespace IES.Controllers
 
             return View(departamento);
         }
+
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(m => m.DepartamentoID == id);
+
+            if (departamento == null)
+                return NotFound();
+
+            return View(departamento);
+        }
     }
 }
