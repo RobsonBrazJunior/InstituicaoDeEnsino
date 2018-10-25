@@ -56,5 +56,35 @@ namespace IES.Controllers
 
             return View(departamento);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID,Nome")] Departamento departamento)
+        {
+            if (id != departamento.DepartamentoID)
+                return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(departamento);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DepartamentoExists(departamento.DepartamentoID))
+                        return NotFound();
+                    else
+                        throw;
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(departamento);
+        }
+
+        private bool DepartamentoExists(long? id) => _context.Departamentos.Any(e => e.DepartamentoID == id);
     }
 }
