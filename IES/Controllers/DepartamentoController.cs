@@ -11,15 +11,9 @@ namespace IES.Controllers
     {
         private readonly IESContext _context;
 
-        public DepartamentoController(IESContext context)
-        {
-            _context = context;
-        }
+        public DepartamentoController(IESContext context) => _context = context;
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Departamentos.OrderBy(c => c.Nome).ToListAsync());
-        }
+        public async Task<IActionResult> Index() => View(await _context.Departamentos.OrderBy(c => c.Nome).ToListAsync());    
 
         public IActionResult Create() => View();
 
