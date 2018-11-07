@@ -1,55 +1,67 @@
 ﻿@model IEnumerable<IES.Models.Instituicao>
 
 @{
-    Layout = null;
+    Layout = "_LayoutIES";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Criar nova instituição</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InstituicaoID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Endereco)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InstituicaoID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Endereco)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.InstituicaoID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.InstituicaoID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.InstituicaoID })
-            </td>
-        </tr>
+@section Styles  {
+    <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.min.css" />
 }
-    </tbody>
-</table>
-</body>
-</html>
+
+<div class="card-block">
+    <div class="card-header text-white bg-primary text-center h1">
+        Instituições Registradas
+    </div>
+    <div class="card-body">
+        <table id="tabela_instituicoes">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstituicaoID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Endereco)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstituicaoID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Endereco)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.InstituicaoID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer bg-success text-center">
+        <a asp-action="Create" class="btn-success">Criar nova instituição</a>
+    </div>
+
+    @section ScriptPage {
+        <script type="text/javascript" src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#tabela_instituicoes').DataTable();
+            });
+        </script>
+    }
+</div>
