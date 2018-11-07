@@ -60,7 +60,9 @@
         <script type="text/javascript" src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#tabela_instituicoes').DataTable();
+                $('#tabela_instituicoes').DataTable({
+                    "order": [[1, "asc"]]
+                });
             });
         </script>
     }
