@@ -113,6 +113,7 @@ namespace IES.Controllers
         {
             var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
             _context.Instituicoes.Remove(instituicao);
+            TempData["Message"] = "Instituição " + instituicao.Nome.ToUpper() + " foi removida";
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
