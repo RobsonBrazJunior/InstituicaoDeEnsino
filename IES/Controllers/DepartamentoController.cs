@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using IES.Data;
 using IES.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace IES.Controllers
@@ -54,12 +55,14 @@ namespace IES.Controllers
             if (departamento == null)
                 return NotFound();
 
+            ViewBag.Instituicoes = new SelectList(_context.Instituicoes.OrderBy(b => b.Nome), "InstituicaoID", "Nome", departamento.InstituicaoID);
+
             return View(departamento);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID,Nome")] Departamento departamento)
+        public async Task<IActionResult> Edit(long? id, [Bind("DepartamentoID,Nome, InstituicaoID")] Departamento departamento)
         {
             if (id != departamento.DepartamentoID)
                 return NotFound();
@@ -81,6 +84,8 @@ namespace IES.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Instituicoes = new SelectList(_context.Instituicoes.OrderBy(b => b.Nome), "InstituicaoID", "Nome", departamento.InstituicaoID);
 
             return View(departamento);
         }
