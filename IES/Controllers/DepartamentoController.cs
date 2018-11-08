@@ -98,6 +98,7 @@ namespace IES.Controllers
                 return NotFound();
 
             var departamento = await _context.Departamentos.SingleOrDefaultAsync(m => m.DepartamentoID == id);
+            _context.Instituicoes.Where(i => departamento.InstituicaoID == i.InstituicaoID).Load();
 
             if (departamento == null)
                 return NotFound();
