@@ -13,9 +13,15 @@ namespace IES.Controllers
 
         public DepartamentoController(IESContext context) => _context = context;
 
-        public async Task<IActionResult> Index() => View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());    
+        public async Task<IActionResult> Index() => View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());
 
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            var instituicoes = _context.Instituicoes.OrderBy(i => i.Nome).ToList();
+            instituicoes.Insert(0, new Instituicao() { InstituicaoID = 0, Nome = "Selecione a instituição" });
+            ViewBag.Instituicoes = instituicoes;
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
