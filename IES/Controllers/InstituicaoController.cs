@@ -19,7 +19,7 @@ namespace IES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome")] Instituicao instituicao)
+        public async Task<IActionResult> Create([Bind("Nome", "Endereco")] Instituicao instituicao)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace IES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, [Bind("InstituicaoID,Nome")] Instituicao instituicao)
+        public async Task<IActionResult> Edit(long? id, [Bind("InstituicaoID,Nome","Endereco")] Instituicao instituicao)
         {
             if (id != instituicao.InstituicaoID)
                 return NotFound();
