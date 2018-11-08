@@ -13,7 +13,7 @@ namespace IES.Controllers
 
         public DepartamentoController(IESContext context) => _context = context;
 
-        public async Task<IActionResult> Index() => View(await _context.Departamentos.OrderBy(c => c.Nome).ToListAsync());    
+        public async Task<IActionResult> Index() => View(await _context.Departamentos.Include(i => i.Instituicao).OrderBy(c => c.Nome).ToListAsync());    
 
         public IActionResult Create() => View();
 
