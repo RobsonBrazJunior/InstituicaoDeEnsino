@@ -86,7 +86,7 @@ namespace IES.Controllers
             if (id == null)
                 return NotFound();
 
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
+            var instituicao = await _context.Instituicoes.Include(d => d.Departamentos).SingleOrDefaultAsync(m => m.InstituicaoID == id);
 
             if (instituicao == null)
                 return NotFound();
