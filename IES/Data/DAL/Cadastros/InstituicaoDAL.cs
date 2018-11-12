@@ -23,5 +23,16 @@ namespace IES.Data.DAL.Cadastros
         {
             return await _context.Instituicoes.Include(d => d.Departamentos).SingleOrDefaultAsync(m => m.InstituicaoID == id);
         }
+
+        public async Task<Instituicao> GravarInstituicao(Instituicao instituicao)
+        {
+            if (instituicao.InstituicaoID == null)
+                _context.Instituicoes.Add(instituicao);
+            else
+                _context.Update(instituicao);
+
+            await _context.SaveChangesAsync();
+            return instituicao;
+        }
     }
 }
