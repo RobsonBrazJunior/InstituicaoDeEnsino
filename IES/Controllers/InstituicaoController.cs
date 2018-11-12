@@ -85,7 +85,10 @@ namespace IES.Controllers
             return View(instituicao);
         }
 
-        private bool InstituicaoExists(long? id) => _context.Instituicoes.Any(e => e.InstituicaoID == id);
+        private async Task<bool> InstituicaoExists(long? id)
+        {
+            return await instituicaoDAL.ObterInstituicaoPorId((long) id) != null;
+        }
 
         public async Task<IActionResult> Details(long? id) => await ObterVisoaInstituicaoPorId(id);
 
