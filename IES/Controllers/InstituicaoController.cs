@@ -4,14 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using IES.Data.DAL.Cadastros;
 
 namespace IES.Controllers
 {
     public class InstituicaoController : Controller
     {
         private readonly IESContext _context;
+        private readonly InstituicaoDAL instituicaoDAL;
 
-        public InstituicaoController(IESContext context) => _context = context;
+        public InstituicaoController(IESContext context)
+        {
+            _context = context;
+            instituicaoDAL = new InstituicaoDAL(context);
+        }
 
         public async Task<IActionResult> Index() => View(await _context.Instituicoes.OrderBy(c => c.Nome).ToListAsync());
 
