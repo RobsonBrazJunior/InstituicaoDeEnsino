@@ -34,5 +34,13 @@ namespace IES.Data.DAL.Cadastros
             await _context.SaveChangesAsync();
             return instituicao;
         }
+
+        public async Task<Instituicao> EliminarInstituicaoPorId(long id)
+        {
+            Instituicao instituicao = await ObterInstituicaoPorId(id);
+            _context.Instituicoes.Remove(instituicao);
+            await _context.SaveChangesAsync();
+            return instituicao;
+        }
     }
 }
