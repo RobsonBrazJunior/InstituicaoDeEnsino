@@ -1,5 +1,5 @@
 ﻿using IES.Data;
-using IES.Models;
+using Modelo.Cadastros;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

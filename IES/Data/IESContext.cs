@@ -1,4 +1,4 @@
-﻿using IES.Models;
+﻿using Modelo.Cadastros;
 using Microsoft.EntityFrameworkCore;
 
 namespace IES.Data

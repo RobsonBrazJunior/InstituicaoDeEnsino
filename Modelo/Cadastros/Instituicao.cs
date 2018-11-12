@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IES.Models
+namespace Modelo.Cadastros
 {
     public class Instituicao
     {

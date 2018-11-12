@@ -1,4 +1,4 @@
-﻿namespace IES.Models
+﻿namespace Modelo.Cadastros
 {
     public class Departamento
     {
