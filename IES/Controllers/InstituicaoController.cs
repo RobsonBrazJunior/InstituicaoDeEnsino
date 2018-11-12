@@ -95,10 +95,8 @@ namespace IES.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
-            _context.Instituicoes.Remove(instituicao);
+            var instituicao = await instituicaoDAL.EliminarInstituicaoPorId((long) id);
             TempData["Message"] = "Instituição " + instituicao.Nome.ToUpper() + " foi removida";
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }
