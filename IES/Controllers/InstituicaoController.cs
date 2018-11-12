@@ -19,7 +19,20 @@ namespace IES.Controllers
             instituicaoDAL = new InstituicaoDAL(context);
         }
 
-        public async Task<IActionResult> Index() => View(await _context.Instituicoes.OrderBy(c => c.Nome).ToListAsync());
+        private async Task<IActionResult> ObterVisoaInstituicaoPorId(long? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var instituicao = await instituicaoDAL.ObterInstituicaoPorId((long) id);
+
+            if (instituicao == null)
+                return NotFound();
+
+            return View(instituicao);
+        }
+
+        public async Task<IActionResult> Index() => View(await instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToListAsync());
 
         public IActionResult Create() => View();
 
@@ -44,18 +57,7 @@ namespace IES.Controllers
             return View(instituicao);
         }
 
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
-
-            if (instituicao == null)
-                return NotFound();
-
-            return View(instituicao);
-        }
+        public async Task<IActionResult> Edit(long? id) => await ObterVisoaInstituicaoPorId(id);
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,31 +89,9 @@ namespace IES.Controllers
 
         private bool InstituicaoExists(long? id) => _context.Instituicoes.Any(e => e.InstituicaoID == id);
 
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-                return NotFound();
+        public async Task<IActionResult> Details(long? id) => await ObterVisoaInstituicaoPorId(id);
 
-            var instituicao = await _context.Instituicoes.Include(d => d.Departamentos).SingleOrDefaultAsync(m => m.InstituicaoID == id);
-
-            if (instituicao == null)
-                return NotFound();
-
-            return View(instituicao);
-        }
-
-        public async Task<IActionResult> Delete(long? id)
-        {
-            if (id == null)
-                return NotFound();
-
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
-
-            if (instituicao == null)
-                return NotFound();
-
-            return View(instituicao);
-        }
+        public async Task<IActionResult> Delete(long? id) => await ObterVisoaInstituicaoPorId(id);
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
