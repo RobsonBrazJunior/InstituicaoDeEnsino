@@ -38,14 +38,13 @@ namespace IES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome", "Endereco")] Instituicao instituicao)
+        public async Task<IActionResult> Create([Bind("Nome,Endereco")] Instituicao instituicao)
         {
             try
             {
                 if (ModelState.IsValid)
-                {
-                    _context.Add(instituicao);
-                    await _context.SaveChangesAsync();
+                {                   
+                    await instituicaoDAL.GravarInstituicao(instituicao);
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -61,7 +60,7 @@ namespace IES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, [Bind("InstituicaoID,Nome","Endereco")] Instituicao instituicao)
+        public async Task<IActionResult> Edit(long? id, [Bind("InstituicaoID,Nome,Endereco")] Instituicao instituicao)
         {
             if (id != instituicao.InstituicaoID)
                 return NotFound();
@@ -70,8 +69,7 @@ namespace IES.Controllers
             {
                 try
                 {
-                    _context.Update(instituicao);
-                    await _context.SaveChangesAsync();
+                   await instituicaoDAL.GravarInstituicao(instituicao);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -97,7 +95,7 @@ namespace IES.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
+            Instituicao instituicao = await _context.Instituicoes.SingleOrDefaultAsync(m => m.InstituicaoID == id);
             _context.Instituicoes.Remove(instituicao);
             TempData["Message"] = "Instituição " + instituicao.Nome.ToUpper() + " foi removida";
             await _context.SaveChangesAsync();
