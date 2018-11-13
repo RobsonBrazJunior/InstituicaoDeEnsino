@@ -73,7 +73,7 @@ namespace IES.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstituicaoExists(instituicao.InstituicaoID))
+                    if (! await InstituicaoExists(instituicao.InstituicaoID))
                         return NotFound();
                     else
                         throw;
