@@ -1,5 +1,6 @@
 ﻿using Modelo.Cadastros;
 using Microsoft.EntityFrameworkCore;
+using Modelo.Discente;
 
 namespace IES.Data
 {
@@ -11,6 +12,7 @@ namespace IES.Data
         public DbSet<Instituicao> Instituicoes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Academico> Academicos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
