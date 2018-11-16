@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Discente;
 
-namespace IES.Controllers
+namespace IES.Areas.Discente.Controllers
 {
     public class AcademicoController : Controller
     {

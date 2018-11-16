@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IES.Data.DAL.Cadastros;
 
-namespace IES.Controllers
+namespace IES.Areas.Cadastros.Controllers
 {
     public class InstituicaoController : Controller
     {
