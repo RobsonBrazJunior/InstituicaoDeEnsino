@@ -7,6 +7,7 @@ using Modelo.Discente;
 
 namespace IES.Areas.Discente.Controllers
 {
+    [Area("Discente")]
     public class AcademicoController : Controller
     {
         private readonly IESContext _context;

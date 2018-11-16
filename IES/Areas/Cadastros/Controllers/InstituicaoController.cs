@@ -8,6 +8,7 @@ using IES.Data.DAL.Cadastros;
 
 namespace IES.Areas.Cadastros.Controllers
 {
+    [Area("Cadastros")]
     public class InstituicaoController : Controller
     {
         private readonly IESContext _context;
