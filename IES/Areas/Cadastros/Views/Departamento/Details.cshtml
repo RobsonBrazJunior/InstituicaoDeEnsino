@@ -13,7 +13,7 @@
         Exibindo um departamento existente
     </div>
     
-    @Html.Partial("~/Views/Departamento/_PartialDetailsContentCard.cshtml", Model)
+    @Html.Partial("~/Areas/Cadastros/Views/Departamento/_PartialDetailsContentCard.cshtml", Model)
 
     <div class="card-footer bg-info text-center text-white">
         <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.DepartamentoID">Alterar</a> |
