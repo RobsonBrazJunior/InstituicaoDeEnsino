@@ -17,7 +17,7 @@ namespace IES.Models.Infra
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar senha")]
-        [Compare("Password", ErrorMessage = "Os valores informados para SENHA e CONFIRMAÇÃO são são iguais.")]
+        [Compare("Password", ErrorMessage = "Os valores informados para SENHA e CONFIRMAÇÃO não são iguais.")]
         public string ConfirmPassword { get; set; }
     }
 }
