@@ -33,5 +33,13 @@ namespace IES.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult RegistrarNovoUsuario(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
     }
 }
