@@ -102,6 +102,15 @@ namespace IES.Areas.Discente.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<FileContentResult> GetFoto(long id)
+        {
+            Academico academico = await academicoDAL.ObterAcademicoPorId(id);
+            if (academico != null)
+                return File(academico.Foto, academico.FotoMimeType);
+
+            return null;
+        }
+
         private async Task<bool> AcademicoExists(long? id) => await academicoDAL.ObterAcademicoPorId((long)id) != null;
     }
 }
