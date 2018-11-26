@@ -56,6 +56,7 @@
             <div class="col-3">
                 <img class="img-thumbnail" scr="@Url.Action("GetFoto", "Academico", new { id = Model.AcademicoID})"
                      style="display:block; margin-left:auto; margin-right:auto;"/>
+                @Html.ActionLink("Download", "DownloadFoto", "Academico", new { id = Model.AcademicoID}, null)
             </div>
         </div>
     </div>
