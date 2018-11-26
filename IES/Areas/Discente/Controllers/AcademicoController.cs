@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using IES.Data;
 using IES.Data.DAL.Discente;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Discente;
@@ -58,13 +60,12 @@ namespace IES.Areas.Discente.Controllers
             {
                 ModelState.AddModelError("", "Não foi possível inserir os dados!");
             }
-
             return View(academico);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, [Bind("AcademicoID,Nome,RegistroAcademico,Nascimento")] Academico academico)
+        public async Task<IActionResult> Edit(long? id, [Bind("AcademicoID,Nome,RegistroAcademico,Nascimento")] Academico academico, IFormFile foto)
         {
             if (id != academico.AcademicoID)
                 return NotFound();
@@ -73,6 +74,11 @@ namespace IES.Areas.Discente.Controllers
             {
                 try
                 {
+                    var stream = new MemoryStream();
+                    await foto.CopyToAsync(stream);
+                    academico.Foto = stream.ToArray();
+                    academico.FotoMimeType = foto.ContentType;
+
                     await academicoDAL.GravarAcademico(academico);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -82,10 +88,8 @@ namespace IES.Areas.Discente.Controllers
                     else
                         throw;
                 }
-
                 return RedirectToAction(nameof(Index));
             }
-
             return View(academico);
         }
 
