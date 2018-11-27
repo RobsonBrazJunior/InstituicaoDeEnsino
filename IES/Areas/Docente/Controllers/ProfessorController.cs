@@ -3,6 +3,7 @@ using IES.Data;
 using IES.Data.DAL.Cadastros;
 using IES.Data.DAL.Docente;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Modelo.Cadastros;
 using Modelo.Docente;
 using System.Collections.Generic;
@@ -69,6 +70,14 @@ namespace IES.Areas.Docente.Controllers
                     cursoDAL.ObterProfessoresForaDoCurso((long)model.CursoID).ToList());
             }
             return View(model);
+        }
+
+        public IQueryable<Professor> ObterProfessoresForaDoCurso(long cursoID)
+        {
+            var curso = _context.Cursos.Where(c => c.CursoID == cursoID).Include(cp => cp.CursosProfessores).First();
+            var professoresDoCurso = curso.CursosProfessores.Select(cp => cp.ProfessorID).ToArray();
+            var professoresForaDoCurso = _context.Professores.Where(p => !professoresDoCurso.Contains(p.ProfessorID));
+            return professoresForaDoCurso;
         }
     }
 }
