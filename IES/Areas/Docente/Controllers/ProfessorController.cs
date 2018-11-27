@@ -1,10 +1,12 @@
-﻿using IES.Data;
+﻿using IES.Areas.Docente.Models;
+using IES.Data;
 using IES.Data.DAL.Cadastros;
 using IES.Data.DAL.Docente;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Cadastros;
 using Modelo.Docente;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IES.Areas.Docente.Controllers
 {
@@ -39,6 +41,34 @@ namespace IES.Areas.Docente.Controllers
 
             professores.Insert(0, new Professor() { ProfessorID = 0, Nome = "Selecione o professor" });
             ViewBag.Professores = professores;
+        }
+
+        [HttpGet]
+        public IActionResult AdicionarProfessor()
+        {
+            PrepararViewBags(instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList(),
+                new List<Departamento>().ToList(), new List<Curso>().ToList(), new List<Professor>().ToList());
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarProfessor([Bind("InstituicaoID, CursoID, ProfessorID")] AdicionarProfessorViewModel model)
+        {
+            if (model.InstituicaoID == 0 || model.DepartamentoID == 0 || model.CursoID == 0 || model.ProfessorID == 0)
+            {
+                ModelState.AddModelError("", "É preciso selecionar todos os dados");
+            }
+            else
+            {
+                cursoDAL.RegistrarProfessor((long)model.CursoID, (long)model.ProfessorID);
+
+                PrepararViewBags(instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList(),
+                    departamentoDAL.ObterDepartamentoPorInstituicao((long)model.InstituicaoID).ToList(),
+                    cursoDAL.ObterCursosPorDepartamento((long)model.DepartamentoID).ToList(),
+                    cursoDAL.ObterProfessoresForaDoCurso((long)model.CursoID).ToList());
+            }
+            return View(model);
         }
     }
 }
