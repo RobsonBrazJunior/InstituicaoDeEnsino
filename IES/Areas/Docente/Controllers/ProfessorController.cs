@@ -1,6 +1,10 @@
 ﻿using IES.Data;
 using IES.Data.DAL.Cadastros;
+using IES.Data.DAL.Docente;
 using Microsoft.AspNetCore.Mvc;
+using Modelo.Cadastros;
+using Modelo.Docente;
+using System.Collections.Generic;
 
 namespace IES.Areas.Docente.Controllers
 {
@@ -20,6 +24,21 @@ namespace IES.Areas.Docente.Controllers
             departamentoDAL = new DepartamentoDAL(context);
             cursoDAL = new CursoDAL(context);
             professorDAL = new ProfessorDAL(context);
+        }
+
+        public void PrepararViewBags(List<Instituicao> instituicoes, List<Departamento> departamentos, List<Curso> cursos, List<Professor> professores)
+        {
+            instituicoes.Insert(0, new Instituicao() { InstituicaoID = 0, Nome = "Selecione a instituição" });
+            ViewBag.Instituicoes = instituicoes;
+
+            departamentos.Insert(0, new Departamento() { DepartamentoID = 0, Nome = "Selecione o departamento" });
+            ViewBag.Departamentos = departamentos;
+
+            cursos.Insert(0, new Curso() { CursoID = 0, Nome = "Selecione o curso" });
+            ViewBag.Cursos = cursos;
+
+            professores.Insert(0, new Professor() { ProfessorID = 0, Nome = "Selecione o professor" });
+            ViewBag.Professores = professores;
         }
     }
 }
