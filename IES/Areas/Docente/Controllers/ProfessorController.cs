@@ -66,6 +66,8 @@ namespace IES.Areas.Docente.Controllers
             {
                 cursoDAL.RegistrarProfessor((long)model.CursoID, (long)model.ProfessorID);
 
+                RegistrarProfessorNaSessao((long)model.CursoID, (long)model.ProfessorID);
+
                 PrepararViewBags(instituicaoDAL.ObterInstituicoesClassificadasPorNome().ToList(),
                     departamentoDAL.ObterDepartamentoPorInstituicao((long)model.InstituicaoID).ToList(),
                     cursoDAL.ObterCursosPorDepartamento((long)model.DepartamentoID).ToList(),
@@ -85,6 +87,17 @@ namespace IES.Areas.Docente.Controllers
             }
             cursosProfessor.Add(cursoProfessor);
             HttpContext.Session.SetString("cursosProfessores", JsonConvert.SerializeObject(cursosProfessor));
+        }
+
+        public IActionResult VerificarUltimosRegistros()
+        {
+            List<CursoProfessor> cursosProfessor = new List<CursoProfessor>();
+            string cursosProfessoresSession = HttpContext.Session.GetString("cursosProfessores");
+            if (cursosProfessoresSession != null)
+            {
+                cursosProfessor = JsonConvert.DeserializeObject<List<CursoProfessor>>(cursosProfessoresSession);
+            }
+            return View(cursosProfessor);
         }
 
         public JsonResult ObterDepartamentosPorInstituicao(long actionID)
