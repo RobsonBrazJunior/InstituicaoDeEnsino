@@ -3,7 +3,7 @@ using IES.Data;
 using IES.Data.DAL.Cadastros;
 using IES.Data.DAL.Docente;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Modelo.Cadastros;
 using Modelo.Docente;
 using System.Collections.Generic;
@@ -72,12 +72,22 @@ namespace IES.Areas.Docente.Controllers
             return View(model);
         }
 
-        public IQueryable<Professor> ObterProfessoresForaDoCurso(long cursoID)
+        public JsonResult ObterDepartamentosPorInstituicao(long actionID)
         {
-            var curso = _context.Cursos.Where(c => c.CursoID == cursoID).Include(cp => cp.CursosProfessores).First();
-            var professoresDoCurso = curso.CursosProfessores.Select(cp => cp.ProfessorID).ToArray();
-            var professoresForaDoCurso = _context.Professores.Where(p => !professoresDoCurso.Contains(p.ProfessorID));
-            return professoresForaDoCurso;
+            var departamentos = departamentoDAL.ObterDepartamentoPorInstituicao(actionID).ToList();
+            return Json(new SelectList(departamentos, "DepartamentoID", "Nome"));
+        }
+
+        public JsonResult ObterCursosPorDepartamento(long actionID)
+        {
+            var cursos = cursoDAL.ObterCursosPorDepartamento(actionID).ToList();
+            return Json(new SelectList(cursos, "CursoID", "Nome"));
+        }
+
+        public JsonResult ObterProfessoresForaDoCurso(long actionID)
+        {
+            var professores = cursoDAL.ObterProfessoresForaDoCurso(actionID).ToList();
+            return Json(new SelectList(professores, "ProfessorID", "Nome"));
         }
     }
 }
