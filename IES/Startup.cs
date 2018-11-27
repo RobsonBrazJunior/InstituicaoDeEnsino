@@ -52,6 +52,8 @@ namespace IES
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
+                //app.UseStatusCodePages();
                 app.UseHsts();
             }
 
