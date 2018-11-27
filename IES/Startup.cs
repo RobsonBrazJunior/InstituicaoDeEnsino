@@ -39,7 +39,9 @@ namespace IES
                 options.LoginPath = "/Infra/Acessar";
                 options.AccessDeniedPath = "/Infra/AcessoNegado";
             });
-            
+
+            services.AddSession();
+            services.AddDistributedMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
