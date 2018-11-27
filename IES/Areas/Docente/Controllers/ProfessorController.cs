@@ -2,10 +2,12 @@
 using IES.Data;
 using IES.Data.DAL.Cadastros;
 using IES.Data.DAL.Docente;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Modelo.Cadastros;
 using Modelo.Docente;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,6 +72,19 @@ namespace IES.Areas.Docente.Controllers
                     cursoDAL.ObterProfessoresForaDoCurso((long)model.CursoID).ToList());
             }
             return View(model);
+        }
+
+        public void RegistrarProfessorNaSessao(long cursoID, long professorID)
+        {
+            var cursoProfessor = new CursoProfessor() { ProfessorID = professorID, CursoID = cursoID };
+            List<CursoProfessor> cursosProfessor = new List<CursoProfessor>();
+            string cursosProfessoresSession = HttpContext.Session.GetString("cursosProfessores");
+            if (cursosProfessoresSession != null)
+            {
+                cursosProfessor = JsonConvert.DeserializeObject<List<CursoProfessor>>(cursosProfessoresSession);
+            }
+            cursosProfessor.Add(cursoProfessor);
+            HttpContext.Session.SetString("cursosProfessores", JsonConvert.SerializeObject(cursosProfessor));
         }
 
         public JsonResult ObterDepartamentosPorInstituicao(long actionID)
